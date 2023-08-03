@@ -10,7 +10,7 @@ st.set_page_config(
   },
 )
 
-ss = st_session_state
+ss = st.session_state
 session = ""
 if not ss:
   ss.pressed_first_button = False
