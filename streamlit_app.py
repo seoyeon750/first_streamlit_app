@@ -1,3 +1,4 @@
+from snowflake.snowpark.session import Session
 import streamlit as st
 
 st.set_page_config(
@@ -20,3 +21,8 @@ with st.sidebar:
   SF_USR = st.text_input("Snowflake USER ( s2oy2on ):")
   SF_PWD = st.text_input("Snowflake password:", type="password")
   conn = {"ACCOUNT": SF_ACCOUNT, "USER": SF_USR, "PASSWORD": SF_PWD}
+
+  if st.button("Connect") or ss.pressed_first_button:
+    session = Session.builder.configs(conn).create()
+    ss.pressed_first_button = True
+    st.success("Success!, icon="✅")
