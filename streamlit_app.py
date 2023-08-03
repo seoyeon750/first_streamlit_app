@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(
   page_title = "Snowflake Health Check App",
-  page_icon = "*"
+  page_icon = "*",
   initial_sidebar_state = "auto",
   menu_items = {
     "Get Help" : "https://developers.snowflake.com",
