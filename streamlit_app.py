@@ -25,4 +25,4 @@ with st.sidebar:
   if st.button("Connect") or ss.pressed_first_button:
     session = Session.builder.configs(conn).create()
     ss.pressed_first_button = True
-    st.success("Success!, icon="✅")
+    st.success("Success!, icon="✓")
