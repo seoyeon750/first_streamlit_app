@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from PIL import Image
+import datetime
 from snowflake.snowpark.session import Session
 
 st.set_page_config(
@@ -49,4 +50,19 @@ with st.container():
     if session != "":
         st.title("Snowflake Health Check")
         image = Image.open("banner.jpg")
+        st.image(
+            image, caption = "Community App Build By Data Superhero - Divyansh Saxena"
+        )
+        st.header(
+            "Get better understanding of Snowflake's Resource Optimization and Performance capabilities on :red[Streamlit]"
+        )
+
+        date_range = st.date_input("Select the Starting Date for Report Generation")
+        currentdata = datetime.datetime.today().strftime("%Y-%m-%d")
+        if str(date_range) > currentdate:
+            st.error("The date selected is greated than current date!", icon="🚨")
+
+        tab1, tab2, tab3 = st.tabs(
+            ["Warehouse Performance", "Users Profile", "Billing Metrics"]
+        )
         
