@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from PIL import Image
 from snowflake.snowpark.session import Session
 
 st.set_page_config(
@@ -43,3 +44,9 @@ with st.sidebar:
         set_warehouse = session.sql(
             f"""USE WAREHOUSE {datawarehouse_option} ;"""
         ).collect()
+
+with st.container():
+    if session != "":
+        st.title("Snowflake Health Check")
+        image = Image.open("banner.jpg")
+        
