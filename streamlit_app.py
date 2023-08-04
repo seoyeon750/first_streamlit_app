@@ -111,4 +111,26 @@ with st.container():
             st.subheader(
                 "Longest Running Queries - :red[opportunity to optimize with clustering of upsize the warehouse]"
             )
-            # sq_long_running_quries = session.sql().to_pandas()
+            sq_long_running_quries = session.sql().to_pandas(
+                """
+                SELECT
+                    QUERY_ID
+                    , ROW_NUMBER() OVER(ORDER BY PARTITIONS_SCANNED DESC) AS QUERY_ID_INT
+                    , QUERY_TEXT
+                    , TOTAL_ELAPSED_TIME/1000 AS QUERY_EXECUTION_TIME_SECONDS
+                    , PARTITIONS_SCANNED
+                    , PARTITIONS_TOTAL
+                FROM SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY Q
+                WHERE 1=1
+                    AND TO_DATE(Q.START_TINE) > '""" + str(date_range) + """'
+                    AND TOTAL_ELAPSED_TIME > 0 -- only get queries that actually used compute
+                    AND ERROR_CODE IS NULL
+                    AND PARTITIONS_SCANNED IS NOT NULL
+                ORDER BY TOTAL_ELAPSED_TIME DESC
+                """
+            )
+            st.dataframe(sq_long_running_queries)
+
+            st.subheader(
+                "Listing Warehouse with days where :red[Multi-Cluster Warehouse Could Have Helped]"
+            )
