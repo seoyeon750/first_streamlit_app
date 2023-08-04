@@ -94,7 +94,7 @@ with st.container():
                 """
                 SELECT
                     QUERY_TEXT
-                    , CCOUNT(*) AS NUMBER_OF_QUERIES
+                    , COUNT(*) AS NUMBER_OF_QUERIES
                     , SUM(TOTAL_ELAPSED_TIME)/1000 AS EXECUTION_SECONDS
                 FROM SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY Q
                 WHERE 1=1
