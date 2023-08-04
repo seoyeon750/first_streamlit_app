@@ -65,4 +65,24 @@ with st.container():
         tab1, tab2, tab3 = st.tabs(
             ["Warehouse Performance", "Users Profile", "Billing Metrics"]
         )
-        
+
+        with tab1:
+            sql_warehouse_performances = session.sql(
+                """
+                SELECT
+                    DATE_TRUNC('HOUR', START_TIME) AS QUERY_START_HOUR
+                    , WAREHOUSE_NAME
+                    , COUNT(*) AS NUM_QUERIES
+                FROM SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY
+                WHERE START_TIME >= '""" + str(date_range) + """' AND WAREHOUSE_NAME IS NOT NULL
+                GROUP BY 1, 2
+                ORDER BY 1 DESC, 2
+                """
+            ).to_pandas()
+            st.subheader(
+                "Average number of queries run on an hourly basis - :red[Understand Query Activity]"
+            )
+            sql_warehouse_performances_pivot = sql_warehouse_performances.pivot_table(
+                values = "NUM_QUERIES", index = "QUERY_START_HOUR", columns = "WAREHOUSE_NAME"
+            )
+            st.area_chart(data = sql_warehouse_performances_pivot)
