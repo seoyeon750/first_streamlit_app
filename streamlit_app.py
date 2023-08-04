@@ -82,7 +82,7 @@ with st.container():
             st.subheader(
                 "Average number of queries run on an hourly basis - :red[Understand Query Activity]"
             )
-            sql_warehouse_performances_pivot = sql_warehouse_performances.pivot_table(
-                values = "NUM_QUERIES", index = "QUERY_START_HOUR", columns = "WAREHOUSE_NAME"
-            )
-            st.area_chart(data = sql_warehouse_performances_pivot)
+            #sql_warehouse_performances_pivot = sql_warehouse_performances.pivot_table(
+            #    values = "NUM_QUERIES", index = "QUERY_START_HOUR", columns = "WAREHOUSE_NAME"
+            #)
+            #st.area_chart(data = sql_warehouse_performances_pivot)
