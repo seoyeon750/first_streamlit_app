@@ -29,3 +29,16 @@ with st.sidebar:
         session = Session.builder.configs(conn).create()
         ss.pressed_first_button = True
         st.success("Success!", icon="✅")
+
+    if session != "":
+        datawarehouse_list = session.sql("show warehouse;").collect()
+        datawarehouse_list = pd.DataFrame(datawarehouse_list)
+        datawarehouse_list = datawarehouse_list["name"]
+
+        datawarehouse_option = st_selectbox(
+            "Select Virtual warehouse", datawarehouse_list
+        )
+
+        set_warehouse = session.sql(
+            f"""USE_WAREHOUSE {datawarehouse_option} ;"""
+        ).collect()
