@@ -31,7 +31,7 @@ with st.sidebar:
         st.success("Success!", icon="✅")
 
     if session != "":
-        datawarehouse_list = session.sql("show warehouse;").collect()
+        datawarehouse_list = session.sql("show warehouses;").collect()
         datawarehouse_list = pd.DataFrame(datawarehouse_list)
         datawarehouse_list = datawarehouse_list["name"]
 
