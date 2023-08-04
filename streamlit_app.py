@@ -86,3 +86,29 @@ with st.container():
                 values = "NUM_QUERIES", index = "QUERY_START_HOUR", columns = "WAREHOUSE_NAME"
             )
             st.area_chart(data = sql_warehouse_performances_pivot)
+
+            st.subheader(
+                "Queries by # of Times Executed and Execution Time - :red[Opportunity to materialize the result set]"
+            )
+            sq_exec_time_q_count = session.sql(
+                """
+                SELECT
+                    QUERY_TEXT
+                    , CCOUNT(*) AS NUMBER_OF_QUERIES
+                    , SUM(TOTAL_ELAPSED_TIME)/1000 AS EXECUTION_SECONDS
+                FROM SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY Q
+                WHERE 1=1
+                    AND (QUERY_TEXT NOT LIKE 'SHOW%' AND QUERY_TEXT NOT LIKE 'USE%')
+                    AND TO_DATE(Q.START_TIME) > '""" + str(date_range) + """'
+                    AND TOTAL_ELAPSED_TIME > 0 -- only get queries that actually used compute
+                    GROUP BY 1
+                    HAVING COUNT(*) >= 10 -- configurable/minimal threashold
+                    ORDER BY 2 DESC
+                """
+            )
+            st.dateframe(sq_exec_time_q_count)
+
+            st.subheader(
+                "Longest Running Queries - :red[opportunity to optimize with clustering of upsize the warehouse]"
+            )
+            # sq_long_running_quries = session.sql().to_pandas()
