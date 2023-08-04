@@ -36,7 +36,7 @@ with st.sidebar:
         datawarehouse_list = pd.DataFrame(datawarehouse_list)
         datawarehouse_list = datawarehouse_list["name"]
 
-        datawarehouse_option = st_selectbox(
+        datawarehouse_option = st.selectbox(
             "Select Virtual warehouse", datawarehouse_list
         )
 
