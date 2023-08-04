@@ -58,7 +58,7 @@ with st.container():
         )
 
         date_range = st.date_input("Select the Starting Date for Report Generation")
-        currentdata = datetime.datetime.today().strftime("%Y-%m-%d")
+        currentdate = datetime.datetime.today().strftime("%Y-%m-%d")
         if str(date_range) > currentdate:
             st.error("The date selected is greated than current date!", icon="🚨")
 
