@@ -40,5 +40,5 @@ with st.sidebar:
         )
 
         set_warehouse = session.sql(
-            f"""USE_WAREHOUSE {datawarehouse_option} ;"""
+            f"""USE WAREHOUSE {datawarehouse_option} ;"""
         ).collect()
