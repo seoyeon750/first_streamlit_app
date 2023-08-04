@@ -106,7 +106,7 @@ with st.container():
                     ORDER BY 2 DESC
                 """
             )
-            st.dateframe(sq_exec_time_q_count)
+            st.dataframe(sq_exec_time_q_count)
 
             st.subheader(
                 "Longest Running Queries - :red[opportunity to optimize with clustering of upsize the warehouse]"
